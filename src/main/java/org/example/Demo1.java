@@ -18,11 +18,30 @@ public class Demo1 {
         //des l'ouverture de la session, et en fonction de la proprieté hibernate.hbm2ddl.auto
         //hibernate va agir sur la base de données
 
-        //l'ajout d'une personne
+       // l'ajout d'une personne
         Personne p = new Personne();
         p.setNom("toto");
         p.setPrenom("tata");
         session.save(p);
         System.out.println("Id : "+ p.getID());
+
+        //recuperer une persoone
+        //c'est important d'être dans la meme transaction si on souhaite modifier ou supprimer
+
+        session.getTransaction().begin();
+        Personne p2 = session.load(Personne.class, Long.valueOf(1));
+        System.out.println(p2.getNom());
+
+        //Modifier
+        p2.setPrenom("titi");
+        session.update(p2);
+
+        //Suppression
+
+        session.delete(p);
+
+        session.getTransaction().commit();
+        session.close();
+        sessionFactory.close();
     }
 }
