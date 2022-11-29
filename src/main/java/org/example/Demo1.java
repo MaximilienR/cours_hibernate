@@ -38,7 +38,7 @@ public class Demo1 {
 
         //Suppression
 
-        session.delete(p);
+       // session.delete(p);
 
         session.getTransaction().commit();
         session.close();
